@@ -66,6 +66,15 @@ config TARGET_TRATS2
 config TARGET_ODROID
 	bool "Exynos4412 Odroid board"
 
+config TARGET_TINY4412
+	bool "Exynos4412 FriendlyARM Tiny4412 board"
+	select SUPPORT_SPL
+	select SPL
+	select EXYNOS4412
+		help
+		Support FriendlyARM Tiny4412 board base on samsung exynos4412
+		CPU: Exynos4412[Samsung SOC on SMP base on ARM CortexA9]
+
 endchoice
 endif
 
@@ -158,6 +167,7 @@ source "board/samsung/universal_c210/Kconfig"
 source "board/samsung/origen/Kconfig"
 source "board/samsung/trats2/Kconfig"
 source "board/samsung/odroid/Kconfig"
+source "board/samsung/tiny4412/Kconfig"
 source "board/samsung/arndale/Kconfig"
 source "board/samsung/smdk5250/Kconfig"
 source "board/samsung/smdk5420/Kconfig"
