@@ -62,6 +62,8 @@ switch_to_hypervisor_ret:
 	orr	r0, r0, #0xc0		@ disable FIQ and IRQ
 	msr	cpsr,r0
 
+	bl light_led
+
 /*
  * Setup vector:
  * (OMAP4 spl TEXT_BASE is not 32 byte aligned.
@@ -325,3 +327,18 @@ ENTRY(cpu_init_crit)
 	b	lowlevel_init		@ go setup pll,mux,memory
 ENDPROC(cpu_init_crit)
 #endif
+
+.globl light_led
+light_led:
+	ldr r0, =0x110002E0   	@set GPM4CON Register
+	ldr r1, =0x00001111 	@Configurate GPM4_0<A1>GPM4_1<A2>GPM4_2<A3>GPM4_3 output
+	str r1,[r0]
+
+	ldr r0, =0x110002E4 	@set GPM4DAT Register
+	@ mov r1,#0xFE 			@light All led1 on
+	@ mov r1,#0xFD 			@light All led2 on
+	@ mov r1,#0xFB 			@light All led3 on
+	@ mov r1,#0xF7 			@light All led4 on
+	mov r1,#0xf0 			@light all len  on
+	str r1,[r0]
+	mov pc,lr
